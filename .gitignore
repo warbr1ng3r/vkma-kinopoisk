@@ -1,0 +1,16 @@
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+node_modules
+dist
+*.zip
+.yarn
+.idea
+.vscode
+
+.env
+.npm
+.DS_Store
+
+.vercel

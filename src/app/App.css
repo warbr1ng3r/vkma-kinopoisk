@@ -1,0 +1,17 @@
+.vkui--vkBase--dark,
+.vkui--vkIOS--dark {
+  background: linear-gradient(
+    180deg,
+    var(--vkui--color_background_content) 11%,
+    rgb(66, 44, 3)
+  );
+}
+
+.vkui--vkBase--light,
+.vkui--vkIOS--light {
+  background: linear-gradient(
+    180deg,
+    var(--vkui--color_background_content) 11%,
+    rgb(182, 129, 82)
+  );
+}
