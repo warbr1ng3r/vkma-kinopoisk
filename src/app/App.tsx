@@ -21,7 +21,7 @@ export const App = () => {
   return (
     <ConfigProvider platform={Platform.ANDROID}>
       <AdaptivityProvider>
-        <AppRoot mode="full">
+        <AppRoot>
           <QueryClientProvider client={queryClient}>
             <ModalContextProvider>
               <MainLayout />
