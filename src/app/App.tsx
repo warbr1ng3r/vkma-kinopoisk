@@ -1,34 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import {
-  Icon56MentionOutline,
-  Icon56MessageReadOutline,
-  Icon56UsersOutline
-} from '@vkontakte/icons';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import bridge from '@vkontakte/vk-bridge';
-import {
-  AdaptivityProvider,
-  AppRoot,
-  Avatar,
-  Button,
-  Cell,
-  ConfigProvider,
-  Group,
-  Panel,
-  PanelHeader,
-  Placeholder,
-  Platform,
-  Separator,
-  SplitCol,
-  SplitLayout,
-  View,
-  useAdaptivityConditionalRender,
-  usePlatform
-} from '@vkontakte/vkui';
+import { AdaptivityProvider, AppRoot, ConfigProvider, Platform } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import { FilmCard } from '#entities/FilmCard/FilmCard';
-import { MainTemplate } from '#templates/MainTemplate';
+import { MainLayout } from '#layouts/MainLayout';
+import { ModalContextProvider } from '#shared/modalContext';
 
 import './App.css';
 
@@ -37,11 +16,18 @@ export const App = () => {
     bridge.send('VKWebAppInit');
   }, []);
 
+  const queryClient = new QueryClient();
+
   return (
     <ConfigProvider platform={Platform.ANDROID}>
       <AdaptivityProvider>
-        <AppRoot>
-          <MainTemplate />
+        <AppRoot mode="full">
+          <QueryClientProvider client={queryClient}>
+            <ModalContextProvider>
+              <MainLayout />
+            </ModalContextProvider>
+            <ReactQueryDevtools initialIsOpen={true} />
+          </QueryClientProvider>
         </AppRoot>
       </AdaptivityProvider>
     </ConfigProvider>

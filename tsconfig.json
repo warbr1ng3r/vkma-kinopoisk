@@ -19,9 +19,9 @@
     "paths": {
       "#shared/*": ["src/shared/*"],
       "#features/*": ["src/features/*"],
-      "#entities/*": ["src/entities/*"],
       "#widgets/*": ["src/widgets/*"],
-      "#pages/*": ["src/pages/*"],
+      "#panels/*": ["src/panels/*"],
+      "#modals/*": ["src/modals/*"],
       "#layouts/*": ["src/layouts/*"],
       "#templates/*": ["src/templates/*"]
     }
