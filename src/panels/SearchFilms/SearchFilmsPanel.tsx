@@ -67,9 +67,10 @@ export const SearchFilmsPanel: FC<Props> = ({ nav }) => {
           isFetching={isFetching}
           errorData={!strBoolean(data?.Response) ? data?.Error : null}
         >
-          {data?.Search.map((item) => (
-            <FilmCard key={item.imdbID} data={item as OMDbSearchItemResponse} />
-          ))}
+          {strBoolean(data?.Response) &&
+            data?.Search.map((item) => (
+              <FilmCard key={item.imdbID} data={item as OMDbSearchItemResponse} />
+            ))}
         </FilmCardGrid>
       </Group>
     </Panel>
