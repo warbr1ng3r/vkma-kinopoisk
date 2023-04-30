@@ -48,11 +48,11 @@ export const FilmModal: FC<Props> = ({ nav, onClose }) => {
       })
       .then((data) => {
         if (data.result) {
-          console.log(data.result);
+          alert(data.result);
         }
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   };
 
