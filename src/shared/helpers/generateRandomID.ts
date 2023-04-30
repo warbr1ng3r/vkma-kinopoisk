@@ -6,5 +6,4 @@ const pad = (number: number, length: number) => {
   return `tt${str}`;
 };
 
-export const generateRandomID = () =>
-  pad(Math.floor(Math.random() * 2155529 + 1), 7);
+export const generateRandomID = () => pad(Math.floor(Math.random() * 2155529 + 1), 7);

@@ -14,10 +14,7 @@ export const VerticalContainer: FC<PropsWithChildren<Props>> = ({
   justifyContent = 'space-between'
 }) => {
   return (
-    <Div
-      className={style.container}
-      style={{ justifyContent: `${justifyContent}` }}
-    >
+    <Div className={style.container} style={{ justifyContent: `${justifyContent}` }}>
       {children}
     </Div>
   );
