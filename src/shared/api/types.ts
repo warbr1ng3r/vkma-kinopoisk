@@ -20,13 +20,15 @@ export type OMDbResponse = {
   imdbID: string;
   Type: string;
   totalSeasons: string;
-  Response: string;
+  Response: 'True' | 'False';
+  Error?: string;
 };
 
 export type OMDbSearchListResponse = {
   Search: OMDbSearchItemResponse[];
   totalResults: string;
-  Response: string;
+  Response: 'True' | 'False';
+  Error?: string;
 };
 
 export type OMDbSearchItemResponse = {

@@ -7,6 +7,7 @@ interface Props {
   isLoading: boolean;
   isFetching: boolean;
   isError: boolean;
+  errorData?: string | null;
   justifyContent?: Property.JustifyContent;
   size?: 's' | 'm' | 'l';
 }
@@ -16,6 +17,7 @@ export const FilmCardGrid: FC<PropsWithChildren<Props>> = ({
   isError,
   isLoading,
   children,
+  errorData,
   justifyContent = 'left',
   size = 'l'
 }) => {
@@ -23,6 +25,13 @@ export const FilmCardGrid: FC<PropsWithChildren<Props>> = ({
     return (
       <Div>
         <Headline>Что-то пошло не так</Headline>
+      </Div>
+    );
+  }
+  if (errorData) {
+    return (
+      <Div>
+        <Headline>{errorData}</Headline>
       </Div>
     );
   }

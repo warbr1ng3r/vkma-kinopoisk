@@ -7,6 +7,7 @@ import { Group, Panel, Placeholder, Search } from '@vkontakte/vkui';
 
 import { fetchBySearchTerm } from '#shared/api/fetchers';
 import { OMDbSearchItemResponse } from '#shared/api/types';
+import { strBoolean } from '#shared/helpers/strBoolean';
 import { useDebounce } from '#shared/helpers/useDebounce';
 import { PAGE_SEARCH } from '#shared/routing/constants';
 import { FilmCard } from '#shared/ui';
@@ -26,7 +27,7 @@ export const SearchFilmsPanel: FC<Props> = ({ nav }) => {
     setSearchTerm(route.params.search || '');
   }, [route.params.search]);
 
-  const { isLoading, isFetching, isError, data, error } = useQuery({
+  const { isLoading, isFetching, isError, data } = useQuery({
     queryKey: ['search', debouncedSearchTerm || 'c'],
     queryFn: async () => {
       if (debouncedSearchTerm) {
@@ -62,8 +63,9 @@ export const SearchFilmsPanel: FC<Props> = ({ nav }) => {
           size="s"
           justifyContent="left"
           isLoading={isLoading}
-          isFetching={isFetching}
           isError={isError}
+          isFetching={isFetching}
+          errorData={!strBoolean(data?.Response) ? data?.Error : null}
         >
           {data?.Search.map((item) => (
             <FilmCard key={item.imdbID} data={item as OMDbSearchItemResponse} />

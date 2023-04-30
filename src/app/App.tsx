@@ -8,7 +8,6 @@ import { AdaptivityProvider, AppRoot, ConfigProvider, Platform } from '@vkontakt
 import '@vkontakte/vkui/dist/vkui.css';
 
 import { MainLayout } from '#layouts/MainLayout';
-import { ModalContextProvider } from '#shared/modalContext';
 import { PAGE_RANDOM } from '#shared/routing/constants';
 
 import './App.css';
@@ -28,9 +27,7 @@ export const App = () => {
         <AdaptivityProvider>
           <AppRoot>
             <QueryClientProvider client={queryClient}>
-              <ModalContextProvider>
-                <MainLayout />
-              </ModalContextProvider>
+              <MainLayout />
               <ReactQueryDevtools initialIsOpen={true} />
             </QueryClientProvider>
           </AppRoot>

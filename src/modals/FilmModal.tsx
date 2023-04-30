@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { useParams } from '@happysanta/router';
 import { useQuery } from '@tanstack/react-query';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
+import bridge from '@vkontakte/vk-bridge';
 import {
   Footer,
   Footnote,
@@ -39,6 +40,22 @@ export const FilmModal: FC<Props> = ({ nav, onClose }) => {
     refetchOnMount: false
   });
 
+  const addToStorage = () => {
+    bridge
+      .send('VKWebAppStorageSet', {
+        key: id,
+        value: JSON.stringify(data)
+      })
+      .then((data) => {
+        if (data.result) {
+          console.log(data.result);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <ModalPage
       nav={nav}
@@ -55,12 +72,12 @@ export const FilmModal: FC<Props> = ({ nav, onClose }) => {
           after={
             <>
               {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
-                <PanelHeaderButton onClick={onClose}>
+                <PanelHeaderButton onClick={addToStorage}>
                   <Icon24Done />
                 </PanelHeaderButton>
               )}
               {platform === Platform.IOS && (
-                <PanelHeaderButton onClick={onClose}>Готово</PanelHeaderButton>
+                <PanelHeaderButton onClick={addToStorage}>Готово</PanelHeaderButton>
               )}
             </>
           }

@@ -8,6 +8,7 @@ import { Button, Group, Panel, Placeholder } from '@vkontakte/vkui';
 import { fetchByID } from '#shared/api/fetchers';
 import { OMDbSearchItemResponse } from '#shared/api/types';
 import { generateRandomID } from '#shared/helpers/generateRandomID';
+import { strBoolean } from '#shared/helpers/strBoolean';
 import { PAGE_RANDOM } from '#shared/routing/constants';
 import { FilmCard } from '#shared/ui';
 import { FilmCardGrid } from '#widgets/FilmCardGrid/FilmCardGrid';
@@ -53,7 +54,12 @@ export const RandomFilmPanel: FC<Props> = ({ nav }) => {
         >
           Нажмите на кнопку, если хотите получить случайный фильм
         </Placeholder>
-        <FilmCardGrid isLoading={isLoading} isFetching={isFetching} isError={isError}>
+        <FilmCardGrid
+          isLoading={isLoading}
+          isFetching={isFetching}
+          isError={isError}
+          errorData={!strBoolean(data?.Response) ? data?.Error : null}
+        >
           <FilmCard data={data as OMDbSearchItemResponse} />
         </FilmCardGrid>
       </Group>
