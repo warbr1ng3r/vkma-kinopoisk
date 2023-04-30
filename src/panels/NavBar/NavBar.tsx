@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { useLocation, useRouter } from '@happysanta/router';
 import { Cell, Group, Header, Panel, Separator } from '@vkontakte/vkui';
@@ -8,7 +8,6 @@ import { PAGE_RANDOM, PAGE_SEARCH } from '#shared/routing/constants';
 export const NavBar: FC = () => {
   const location = useLocation();
   const router = useRouter();
-  console.log(location.getPageId());
 
   return (
     <Panel>

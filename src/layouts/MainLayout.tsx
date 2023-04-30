@@ -23,8 +23,8 @@ const MainLayoutInner = () => {
 
       <SplitCol width="100%" maxWidth="768px" autoSpaced>
         <View activePanel={location.getViewActivePanel(VIEW_MAIN) as string}>
-          <RandomFilmPanel id={PANEL_RANDOM} />
-          <SearchFilmsPanel id={PANEL_SEARCH} />
+          <RandomFilmPanel nav={PANEL_RANDOM} />
+          <SearchFilmsPanel nav={PANEL_SEARCH} />
         </View>
       </SplitCol>
     </SplitLayout>

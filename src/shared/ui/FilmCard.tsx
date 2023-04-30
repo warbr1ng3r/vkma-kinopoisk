@@ -1,22 +1,22 @@
 import { FC } from 'react';
 
+import { useRouter } from '@happysanta/router';
 import { ContentCard } from '@vkontakte/vkui';
 
 import { OMDbSearchItemResponse } from '#shared/api/types';
-import { useModal } from '#shared/modalContext';
+import { MODAL_FILM_INFO } from '#shared/routing/constants';
 
 interface Props {
   data: OMDbSearchItemResponse;
 }
 
 export const FilmCard: FC<Props> = ({ data }) => {
-  const { setActiveModal, setCurrentSearchParam } = useModal();
+  const router = useRouter();
 
   return (
     <ContentCard
       onClick={() => {
-        setActiveModal('MODAL_FILM_INFO');
-        setCurrentSearchParam(data.imdbID);
+        router.pushModal(MODAL_FILM_INFO, { id: data.imdbID });
       }}
       srcSet={data.Poster}
       loading="lazy"

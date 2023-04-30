@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { useParams } from '@happysanta/router';
 import { useQuery } from '@tanstack/react-query';
 import { Icon24Cancel, Icon24Done } from '@vkontakte/icons';
 import {
@@ -20,18 +21,18 @@ import { FilterNA } from '#shared/helpers/FilterNA';
 import { HorizontalContainer, VerticalContainer } from '#shared/ui';
 
 interface Props {
-  id: string;
-  dataID?: string;
+  nav: string;
   onClose: () => void;
 }
 
-const FilmModal: FC<Props> = ({ id, dataID, onClose }) => {
+export const FilmModal: FC<Props> = ({ nav, onClose }) => {
   const platform = usePlatform();
+  const { id } = useParams();
   const { deviceType } = useAdaptivityConditionalRender();
   const { isLoading, isError, data, error, refetch } = useQuery({
-    queryKey: ['modal', dataID],
+    queryKey: ['modal', id],
     queryFn: async () => {
-      const response = await fetchByID(dataID as string);
+      const response = await fetchByID(id);
       return response.data;
     },
     refetchOnWindowFocus: false,
@@ -40,7 +41,7 @@ const FilmModal: FC<Props> = ({ id, dataID, onClose }) => {
 
   return (
     <ModalPage
-      nav={id}
+      nav={nav}
       header={
         <ModalPageHeader
           before={
@@ -85,5 +86,3 @@ const FilmModal: FC<Props> = ({ id, dataID, onClose }) => {
     </ModalPage>
   );
 };
-
-export default FilmModal;

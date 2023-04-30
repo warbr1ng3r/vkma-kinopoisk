@@ -1,20 +1,19 @@
 import { FC } from 'react';
 
+import { useLocation, useRouter } from '@happysanta/router';
 import { ModalRoot as ModalRootVKUI } from '@vkontakte/vkui';
 
-import { useModal } from '#shared/modalContext';
+import { MODAL_FILM_INFO } from '#shared/routing/constants';
 
-import FilmModal from './FilmModal';
+import { FilmModal } from './FilmModal';
 
 export const ModalRoot: FC = () => {
-  const { activeModal, setActiveModal, currentSearchParam } = useModal();
+  const router = useRouter();
+  const location = useLocation();
+
   return (
-    <ModalRootVKUI activeModal={activeModal}>
-      <FilmModal
-        id="MODAL_FILM_INFO"
-        dataID={currentSearchParam as string}
-        onClose={() => setActiveModal(null)}
-      />
+    <ModalRootVKUI activeModal={location.getModalId()} onClose={() => router.popPage()}>
+      <FilmModal nav={MODAL_FILM_INFO} onClose={() => router.popPage()} />
     </ModalRootVKUI>
   );
 };

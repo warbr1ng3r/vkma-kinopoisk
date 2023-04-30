@@ -1,5 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
+import { useLocation, useRouter } from '@happysanta/router';
 import { useQuery } from '@tanstack/react-query';
 import { Icon56SearchOutline } from '@vkontakte/icons';
 import { Group, Panel, Placeholder, Search } from '@vkontakte/vkui';
@@ -7,19 +8,26 @@ import { Group, Panel, Placeholder, Search } from '@vkontakte/vkui';
 import { fetchBySearchTerm } from '#shared/api/fetchers';
 import { OMDbSearchItemResponse } from '#shared/api/types';
 import { useDebounce } from '#shared/helpers/useDebounce';
+import { PAGE_SEARCH } from '#shared/routing/constants';
 import { FilmCard } from '#shared/ui';
 import { FilmCardGrid } from '#widgets/FilmCardGrid/FilmCardGrid';
 
 interface Props {
-  id: string;
+  nav: string;
 }
 
-export const SearchFilmsPanel: FC<Props> = ({ id }) => {
+export const SearchFilmsPanel: FC<Props> = ({ nav }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const debouncedSearchTerm = useDebounce<string>(searchTerm, 800);
+  const router = useRouter();
+  const { route } = useLocation();
+
+  useEffect(() => {
+    setSearchTerm(route.params.search || '');
+  }, [route.params.search]);
 
   const { isLoading, isFetching, isError, data, error } = useQuery({
-    queryKey: ['search', debouncedSearchTerm],
+    queryKey: ['search', debouncedSearchTerm || 'c'],
     queryFn: async () => {
       if (debouncedSearchTerm) {
         const response = await fetchBySearchTerm(searchTerm);
@@ -28,11 +36,14 @@ export const SearchFilmsPanel: FC<Props> = ({ id }) => {
     },
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    enabled: !!searchTerm
+    enabled: !!debouncedSearchTerm,
+    onSuccess: () =>
+      debouncedSearchTerm !== route.params.search &&
+      router.pushPage(PAGE_SEARCH, { search: debouncedSearchTerm })
   });
 
   return (
-    <Panel id={id}>
+    <Panel nav={nav}>
       <Group>
         <Placeholder
           icon={<Icon56SearchOutline />}
@@ -44,7 +55,9 @@ export const SearchFilmsPanel: FC<Props> = ({ id }) => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           }
-        />
+        >
+          Введите название фильма и подождите
+        </Placeholder>
         <FilmCardGrid
           size="s"
           justifyContent="left"
