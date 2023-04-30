@@ -7,3 +7,7 @@
 .vkui--vkIOS--light {
   background: #9a92df;
 }
+
+#root {
+  margin-top: 16px;
+}
