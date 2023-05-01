@@ -19,7 +19,10 @@ import {
 
 import { fetchByID } from '#shared/api/fetchers';
 import { FilterNA } from '#shared/helpers/FilterNA';
+import { MODAL_CHOICE } from '#shared/routing/constants';
 import { HorizontalContainer, VerticalContainer } from '#shared/ui';
+
+import { router } from '../app/router';
 
 interface Props {
   nav: string;
@@ -40,22 +43,6 @@ export const FilmModal: FC<Props> = ({ nav, onClose }) => {
     refetchOnMount: false
   });
 
-  const addToStorage = () => {
-    bridge
-      .send('VKWebAppStorageSet', {
-        key: id,
-        value: JSON.stringify(data)
-      })
-      .then((data) => {
-        if (data.result) {
-          alert(data.result);
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
   return (
     <ModalPage
       nav={nav}
@@ -72,12 +59,14 @@ export const FilmModal: FC<Props> = ({ nav, onClose }) => {
           after={
             <>
               {(platform === Platform.ANDROID || platform === Platform.VKCOM) && (
-                <PanelHeaderButton onClick={addToStorage}>
+                <PanelHeaderButton onClick={() => router.pushModal(MODAL_CHOICE)}>
                   <Icon24Done />
                 </PanelHeaderButton>
               )}
               {platform === Platform.IOS && (
-                <PanelHeaderButton onClick={addToStorage}>Готово</PanelHeaderButton>
+                <PanelHeaderButton onClick={() => router.pushModal(MODAL_CHOICE)}>
+                  Готово
+                </PanelHeaderButton>
               )}
             </>
           }
